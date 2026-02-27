@@ -1,5 +1,6 @@
 #include <EEPROM.h>
 #include <Wire.h>
+#include "../secrets.h"
 
 #define MYADDRESS 10 // da cambiare con numero dell'arduino, per ordine non funzionalità
 #define ND -1

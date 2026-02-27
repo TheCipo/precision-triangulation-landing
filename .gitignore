@@ -1,0 +1,18 @@
+# --- Sicurezza (Credenziali) ---
+# Ignora il file con le password del WiFi/Drone
+**/secrets.h
+
+# --- VS Code & Tool personali ---
+.vscode/
+.history/
+*.code-workspace
+
+# --- File di compilazione ---
+# Cartelle generate da arduino-cli e IDE
+build/
+bin/
+out/
+
+# --- File di sistema ---
+.DS_Store
+Thumbs.db
