@@ -16,3 +16,7 @@ out/
 # --- File di sistema ---
 .DS_Store
 Thumbs.db
+
+# --- File temporanei ---
+*.tmp
+*.log
