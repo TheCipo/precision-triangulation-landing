@@ -1,16 +1,14 @@
 #include <Wire.h>
-#include <EEPROM.h>
 #include "config.h"
 #include "sensor.h"
 #include "filter.h"
 #include "comunication.h"
-#include "setup.h"
 
 // Inizializzazione variabili globali
-float Ax, Ay, Bx, By, Cx, Cy;
-int MAXdistance;
-float Dx = ND, Dy = ND;
+int MAXdistance = ND;
 bool error = false;
+int toSendDistances[3] = {ND, ND, ND};
+bool maxKnown = false;
 
 void setup() {
   Serial.begin(9600);
@@ -22,20 +20,16 @@ void setup() {
     pinMode(echoPins[i], INPUT);
   }
 
-  // Caricamento dati
-  EEPROM.get(EPR_Ax, Ax); EEPROM.get(EPR_Ay, Ay);
-  EEPROM.get(EPR_Bx, Bx); EEPROM.get(EPR_By, By);
-  EEPROM.get(EPR_Cx, Cx); EEPROM.get(EPR_Cy, Cy);
-  EEPROM.get(EPR_Max, MAXdistance);
+  //no data from esp32
+  //MAXdistance = 80;
 
-  Serial.println("Invia un tasto entro 10s per il setup...");
-  unsigned long startT = millis();
-  while (millis() - startT < 10000) {
-    if (Serial.available()) {
-      menuConfigurazione();
-      break;
-    }
-  }
+  //data from ESP32
+  Serial.println("Waiting for data from ESP32");
+  Wire.onReceive(maxReadGet);
+  while (!maxKnown){delay(10);Serial.print(".");}
+	Serial.println("data arrived from ESP32 MAXdistance = "); 
+	Serial.print(MAXdistance);
+	Wire.onReceive(NULL);
 }
 
 void loop() {
@@ -53,14 +47,16 @@ void loop() {
 
   if (!error) {
     for (int i = 0; i < 3; i++) {
-      finalDistances[i] = getMedian(multiDistances[i], DATATIMES);
+      finalDistances[i] = filter(multiDistances[i]);
     }
-    calculatePosition(finalDistances);
-  } else {
-    Dx = ND; Dy = ND;
+		for(int i = 0; i < 3; i++){
+			toSendDistances[i] = finalDistances[i];
+		}
+  }else{
+		for(int i = 0; i < 3; i++){
+			toSendDistances[i] = ND;
+		}
   }
 
-  // Nota: I2C_DataSend() viene chiamato automaticamente dall'interrupt Wire.onRequest
-  // Qui lo usiamo solo per debug seriale se vuoi
   delay(2000);
 }
