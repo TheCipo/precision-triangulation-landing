@@ -3,6 +3,7 @@
 
 #include "config.h"
 
-
+void getDistances();
+String readLine();
 
 #endif

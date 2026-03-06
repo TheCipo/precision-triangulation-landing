@@ -3,6 +3,6 @@
 
 #include "config.h"
 
-
+void calculatePosition(int distances[3]);
 
 #endif
