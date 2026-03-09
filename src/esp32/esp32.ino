@@ -1,1 +1,6 @@
+#include "config.h"
+#include "comunication.h"
+#include "positioning.h"
+#include "drone.h"
+#include "centering_control.h"
 #include "../secrets.h"

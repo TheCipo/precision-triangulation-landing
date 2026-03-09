@@ -40,9 +40,7 @@ Il sistema è diviso in due unità principali per ottimizzare la gestione dei co
 ## 📂 Struttura delle Cartelle
 * `src/`: Contiene il codice sorgente.
     * `arduino/`: Contiene il codice di Arduino.
-       * `arduino.ino`: Codice per la lettura sensori e calcolo mediana.
     * `esp32/`: Contiene il codice di ESP32.
-       * `esp32.ino`: Logica di calcolo posizione e interfaccia drone (WIP).
 * `docs/`: Documentazione di progetto e presentazioni scolastiche.
 * `libs/`: Eventuali librerie per la gestione del sensore o del drone.
 
