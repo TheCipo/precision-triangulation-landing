@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 #define MYADDRESS 10
-#define ND -1
+#define ND -9999
 #define DATATIMES 21
 
 // EEPROM addresses

@@ -61,6 +61,10 @@ void loop() {
     Dx = ND; Dy = ND;
   }
 
+  Serial.print("LOG: calcolato X: ");
+  Serial.print(Dx);
+  Serial.print(" e Y: ");
+  Serial.print(Dy);
   // Nota: I2C_DataSend() viene chiamato automaticamente dall'interrupt Wire.onRequest
   // Qui lo usiamo solo per debug seriale se vuoi
   delay(2000);
