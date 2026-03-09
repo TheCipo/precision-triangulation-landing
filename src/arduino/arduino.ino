@@ -36,6 +36,7 @@ void setup() {
       break;
     }
   }
+  Serial.println("Avvio programma principale.");
 }
 
 void loop() {
