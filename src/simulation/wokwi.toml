@@ -1,0 +1,12 @@
+[wokwi]
+version = 1
+
+[[board]]
+id = "uno"
+firmware = "../build/arduino/arduino.ino.hex"
+elf = "../build/arduino/arduino.ino.elf"
+
+[[board]]
+id = "esp"
+firmware = "../build/esp32/esp32.ino.bin"
+elf = "../build/esp32/esp32.ino.elf"
