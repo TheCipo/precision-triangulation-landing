@@ -1,6 +1,6 @@
 #ifndef FILTER_H
 #define FILTER_H
 
-int getMedian(int data[], int size);
+int filter(int data[]);
 
 #endif
