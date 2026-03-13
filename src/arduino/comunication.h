@@ -4,6 +4,6 @@
 #include <Arduino.h>
 
 void I2C_DataSend();
-String readLine();
+void maxReadGet(int setupInfo);
 
 #endif

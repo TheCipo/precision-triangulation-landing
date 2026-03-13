@@ -4,21 +4,26 @@
 
 void I2C_DataSend() {
   Serial.print(MYADDRESS);
-  Serial.print(" invio X: "); Serial.print(Dx);
-  Wire.write((byte *)&Dx, sizeof(Dx));
-  Serial.print(" Y: "); Serial.println(Dy);
-  Wire.write((byte *)&Dy, sizeof(Dy));
+  byte buffer[6];
+  for (int i = 0; i < 3; i++) {
+    buffer[i * 2] = lowByte(toSendDistances[i]);  // Byte basso
+    buffer[i * 2 + 1] = highByte(toSendDistances[i]); // Byte alto
+  }
+  Wire.write(buffer, 6);
+  
+  for(int i = 0; i < 3; i++){
+    Serial.println(" invia toSendDistances[");
+    Serial.print(i);
+    Serial.print("]:");
+    Serial.print(toSendDistances[i]);
+  }
 }
 
-String readLine() {
-  String datoricevuto = "";
-  while (Serial.available()) Serial.read(); 
-  while (!Serial.available());
-  delay(10);
-  while (Serial.available() > 0) {
-    char c = Serial.read();
-    if (c == '\n') break;
-    datoricevuto += c;
+void maxReadGet(int setupInfo) {
+  if (setupInfo >= sizeof(int)) {
+    byte lowByte = Wire.read();
+    byte highByte = Wire.read();
+    MAXdistance = (highByte << 8) | lowByte; 
+    bool maxKnown = true; // Sblocca il loop nel setup
   }
-  return datoricevuto;
 }

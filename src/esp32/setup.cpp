@@ -1,7 +1,8 @@
 #include "setup.h"
 #include "config.h"
 #include "comunication.h"
-#include <EEPROM.h>
+#include <Preferences.h>
+#include <Wire.h>
 
 void coordinateSensori() {
   Serial.print("R (raggio) = ");
@@ -15,6 +16,9 @@ void coordinateSensori() {
   Serial.print("MAXdistance = ");
   input = readLine();
   MAXdistance = input.toInt();
+  Wire.beginTransmission(RADARADRESS);
+  Wire.write((byte *)&MAXdistance, sizeof(MAXdistance));
+  Wire.endTransmission();
 }
 
 void menuConfigurazione() {
@@ -32,10 +36,13 @@ void menuConfigurazione() {
   if (scelta == 1 || scelta == 2) {
     coordinateSensori();
     if (scelta == 2) {
-      EEPROM.put(EPR_Ax, Ax); EEPROM.put(EPR_Ay, Ay);
-      EEPROM.put(EPR_Bx, Bx); EEPROM.put(EPR_By, By);
-      EEPROM.put(EPR_Cx, Cx); EEPROM.put(EPR_Cy, Cy);
-      EEPROM.put(EPR_Max, MAXdistance);
+      storage.putFloat("Ax", Ax);
+      storage.putFloat("Ay", Ay);
+      storage.putFloat("Bx", Bx);
+      storage.putFloat("By", By);
+      storage.putFloat("Cx", Cx);
+      storage.putFloat("Cy", Cy);
+      storage.putInt("MAXdistance", MAXdistance);
       Serial.println("Salvato!");
     }
   }
