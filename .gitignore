@@ -6,6 +6,7 @@
 .vscode/
 .history/
 *.code-workspace
+.mine/
 
 # --- File di compilazione ---
 # Cartelle generate da arduino-cli e IDE
@@ -21,3 +22,6 @@ Thumbs.db
 *.tmp
 *.log
 *.vcd
+
+# --- File di dati ---
+simulation/data_sample/*.csv

@@ -41,7 +41,7 @@ Il sistema è diviso in due unità principali per ottimizzare la gestione dei co
 * `src/`: Contiene il codice sorgente.
     * `arduino/`: Contiene il codice di Arduino.
     * `esp32/`: Contiene il codice di ESP32.
-    * `simulation/`: Contiene i file per KOWKI.
+* `simulation/`: Contiene i file per KOWKI e un generatore di dati di esempio.
 * `docs/`: Documentazione di progetto e presentazioni scolastiche.
 * `libs/`: Eventuali librerie per la gestione del sensore o del drone.
 
