@@ -16,6 +16,6 @@ const int echoPins[3] = {3, 5, 7};
 extern int MAXdistance;
 extern bool error;
 extern int toSendDistances[3];
-extern bool maxKnow;
+extern bool maxKnown;
 
 #endif
