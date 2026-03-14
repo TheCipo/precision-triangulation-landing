@@ -24,4 +24,5 @@ Thumbs.db
 *.vcd
 
 # --- File di dati ---
-simulation/data_sample/*.csv
+*sample*
+sample.csv
