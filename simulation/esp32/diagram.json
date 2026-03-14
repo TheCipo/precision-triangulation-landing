@@ -3,33 +3,15 @@
   "author": "Digital Twin Project",
   "editor": "wokwi",
   "parts": [
-    { "type": "wokwi-arduino-mega", "id": "mega", "top": 10.2, "left": -109.2, "attrs": {} },
-    { "type": "board-esp32-devkit-v1", "id": "esp", "top": 6.88, "left": 369.6, "attrs": {} },
-    { "type": "wokwi-hc-sr04", "id": "sensore_0", "top": -200.1, "left": -148.1, "attrs": {} },
-    { "type": "wokwi-hc-sr04", "id": "sensore_1", "top": -200, "left": 50, "attrs": {} },
-    { "type": "wokwi-hc-sr04", "id": "sensore_2", "top": -200, "left": 250, "attrs": {} },
-    { "type": "wokwi-logic-analyzer", "id": "logic1", "top": -9.25, "left": 547.2, "attrs": {} }
+    { "type": "board-esp32-devkit-v1", "id": "esp", "top": 46.0, "left": 7.2, "attrs": {} },
+    { "type": "chip-ArduinoStub", "id": "arduino_stub", "top": 62.4, "left": 393.6, "attrs": {} }
   ],
   "connections": [
-    [ "sensore_1:GND", "mega:GND.3", "black", [ "v67.1", "h-199.3" ] ],
-    [ "sensore_0:GND", "mega:GND.3", "black", [ "v67.1", "h10.3" ] ],
-    [ "sensore_2:GND", "mega:GND.3", "black", [ "v67.1", "h-389.7" ] ],
-    [ "sensore_0:VCC", "mega:5V", "red", [ "v67.1", "h11.5" ] ],
-    [ "sensore_1:VCC", "mega:5V", "red", [ "v76.7", "h-178.9" ] ],
-    [ "sensore_2:VCC", "mega:5V", "red", [ "v76.7", "h-378.9" ] ],
-    [ "mega:21", "esp:D22", "green", [ "v-38.4", "h280.5", "v57.6" ] ],
-    [ "esp:D21", "mega:20", "gold", [ "h47.51", "v-67.2", "h-240" ] ],
-    [ "esp:GND.2", "mega:GND.3", "black", [ "h-28.8", "v76.8", "h-211.2" ] ],
-    [ "sensore_0:TRIG", "mega:22", "white", [ "v0" ] ],
-    [ "sensore_1:TRIG", "mega:24", "white", [ "v0" ] ],
-    [ "sensore_2:TRIG", "mega:26", "white", [ "v57.5", "h-187.3", "v96" ] ],
-    [ "sensore_0:ECHO", "mega:23", "blue", [ "v48", "h335.2", "v86.4" ] ],
-    [ "sensore_1:ECHO", "mega:25", "blue", [ "v38.3", "h146.7", "v105.6" ] ],
-    [ "sensore_2:ECHO", "mega:27", "blue", [ "v0" ] ],
-    [ "logic1:D0", "esp:D22", "green", [ "h-38.4", "v38.4" ] ],
-    [ "logic1:D1", "esp:D21", "gold", [ "h-28.8", "v57.6" ] ],
-    [ "logic1:GND", "esp:GND.1", "black", [ "h-38.4", "v76.8" ] ]
+    [ "esp:D22", "arduino_stub:SCL", "green", [ "v0" ] ],
+    [ "esp:D21", "arduino_stub:SDA", "gold", [ "v9.6", "h57.6", "v0" ] ]
 
   ],
-  "dependencies": {}
+  "dependencies": {
+    "chip-ArduinoStub": "chips/arduino_stub.chip.c"
+  }
 }

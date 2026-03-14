@@ -1,0 +1,15 @@
+{
+  "name": "Esp32Stub",
+  "author": "Digital Twin Project",
+  "pins": ["SDA", "SCL"],
+  "controls": [
+    {
+      "id": "maxDistance",
+      "label": "MAXdistance",
+      "type": "range",
+      "min": 10,
+      "max": 400,
+      "step": 1
+    }
+  ]
+}

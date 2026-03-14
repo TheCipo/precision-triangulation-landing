@@ -1,0 +1,5 @@
+{
+  "name": "ArduinoStub",
+  "author": "Digital Twin Project",
+  "pins": ["SDA", "SCL"]
+}
