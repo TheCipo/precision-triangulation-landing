@@ -9,13 +9,13 @@
 
 
 // Pin definitions
-const int trigPins[3] = {2, 4, 6};
-const int echoPins[3] = {3, 5, 7};
+const int trigPins[3] = {22, 24, 26};
+const int echoPins[3] = {23, 25, 27};
 
 // Global variables (shared)
 extern int MAXdistance;
 extern bool error;
 extern int toSendDistances[3];
-extern bool maxKnow;
+extern bool maxKnown;
 
 #endif
