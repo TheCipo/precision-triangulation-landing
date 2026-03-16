@@ -12,6 +12,8 @@ int readDistance(int trigPin, int echoPin) {
   duration = pulseIn(echoPin, HIGH, 30000); 
   if (duration == 0) return ND;
 
-  int dist = duration * 0.034 / 2;
-  return (dist > MAXdistance) ? ND : dist;
+  long int dist = duration / 59;
+  if (dist > MAXdistance) return ND;
+  if (dist < MINdistance) return ND; // Considera distanze inferiori a 5 cm come ND
+  return dist;
 }

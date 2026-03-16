@@ -24,6 +24,6 @@ void maxReadGet(int setupInfo) {
     byte lowByte = Wire.read();
     byte highByte = Wire.read();
     MAXdistance = (highByte << 8) | lowByte; 
-    bool maxKnown = true; // Sblocca il loop nel setup
+    bool maxKnown = true;  // local variable! Global never set.
   }
 }

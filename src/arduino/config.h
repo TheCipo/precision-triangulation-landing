@@ -14,7 +14,7 @@ const int echoPins[3] = {23, 25, 27};
 
 // Global variables (shared)
 extern int MAXdistance;
-extern bool error;
+extern int MINdistance;
 extern int toSendDistances[3];
 extern bool maxKnown;
 
