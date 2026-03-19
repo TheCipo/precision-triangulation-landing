@@ -4,8 +4,8 @@
 #include <Arduino.h>
 #include <Preferences.h>
 
-#define MYADDRESS 0x00
-#define RADARADRESS 10
+#define MYADDRESS 0x01
+#define RADARADRESS 0x10
 #define ND -9999
 
 //global variables

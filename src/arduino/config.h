@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#define MYADDRESS 10
+#define MYADDRESS 0x10
 #define ND -9999
 #define DATATIMES 21
 #define SIMULATION 1 //set this to 0 to get data from ESP32, 1 to simulate data for MAXdistance = 80cm
