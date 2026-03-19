@@ -10,8 +10,15 @@
 
 
 // Pin definitions
-const int trigPins[3] = {22, 24, 26};
-const int echoPins[3] = {23, 25, 27};
+#if defined(ARDUINO_AVR_UNO)
+    const int trigPins[3] = {2, 4, 6};
+    const int echoPins[3] = {3, 5, 7};
+#elif defined(ARDUINO_AVR_MEGA2560)
+    const int trigPins[3] = {22, 24, 26};
+    const int echoPins[3] = {23, 25, 27};
+#else
+    #error "Unsupported board"
+#endif
 
 // Global variables (shared)
 extern int MAXdistance;
