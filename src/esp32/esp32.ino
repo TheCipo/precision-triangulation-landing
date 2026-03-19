@@ -15,16 +15,20 @@ int MAXdistance;
 int Distances[3];
 
 void setup(){
+  storage.begin("landing", false);
   Wire.begin(MYADDRESS);
   Serial.begin(9600);
   Serial.println("Invia un tasto entro 10s per il setup...");
   unsigned long startT = millis();
+  loadSetup();
   while (millis() - startT < 10000) {
     if (Serial.available()) {
       menuConfigurazione();
       break;
     }
   }
+  sendMAXdistance();
+  storage.end();
 }
 
 void loop(){

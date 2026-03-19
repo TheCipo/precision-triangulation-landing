@@ -16,6 +16,13 @@ void getDistances() {
   }
 }
 
+void sendMAXdistance() {
+  Wire.beginTransmission(RADARADRESS);
+  Wire.write((uint8_t)(MAXdistance & 0xFF));
+  Wire.write((uint8_t)((MAXdistance >> 8) & 0xFF));
+  Wire.endTransmission();
+}
+
 String readLine(){
   String datoricevuto = "";
   while (Serial.available()) Serial.read(); 

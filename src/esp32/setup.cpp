@@ -16,10 +16,6 @@ void coordinateSensori() {
   Serial.print("MAXdistance = ");
   input = readLine();
   MAXdistance = input.toInt();
-  Wire.beginTransmission(RADARADRESS);
-  Wire.write((uint8_t)(MAXdistance & 0xFF));
-  Wire.write((uint8_t)((MAXdistance >> 8) & 0xFF));
-  Wire.endTransmission();
 }
 
 void menuConfigurazione() {
@@ -47,4 +43,14 @@ void menuConfigurazione() {
       Serial.println("Salvato!");
     }
   }
+}
+
+void loadSetup() {
+  Ax = storage.getFloat("Ax", 0);
+  Ay = storage.getFloat("Ay", 0);
+  Bx = storage.getFloat("Bx", 0);
+  By = storage.getFloat("By", 0);
+  Cx = storage.getFloat("Cx", 0);
+  Cy = storage.getFloat("Cy", 0);
+  MAXdistance = storage.getInt("MAXdistance", ND);
 }
