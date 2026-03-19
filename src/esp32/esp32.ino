@@ -27,7 +27,9 @@ void setup(){
       break;
     }
   }
-  sendMAXdistance();
+  if (MAXdistance > 0) {
+    sendMAXdistance();
+  }
   storage.end();
 }
 
