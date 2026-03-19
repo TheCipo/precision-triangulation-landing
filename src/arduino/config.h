@@ -24,6 +24,6 @@
 extern int MAXdistance;
 extern int MINdistance;
 extern int toSendDistances[3];
-extern bool maxKnown;
+extern volatile bool maxKnown;
 
 #endif
