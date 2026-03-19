@@ -9,7 +9,7 @@ int MAXdistance = ND;
 int MINdistance = ND;
 bool error = false;
 int toSendDistances[3] = {ND, ND, ND};
-bool maxKnown = false;
+volatile bool maxKnown = false;
 
 void setup() {
   Serial.begin(9600);
@@ -21,17 +21,20 @@ void setup() {
     pinMode(echoPins[i], INPUT);
   }
 
-  //no data from esp32
-  MAXdistance = 80;
   MINdistance = 5;
 
-  //data from ESP32
-  /*Serial.println("Waiting for data from ESP32");
-  Wire.onReceive(maxReadGet);
-  while (!maxKnown){delay(10);Serial.print(".");}
-	Serial.println("data arrived from ESP32 MAXdistance = "); 
-	Serial.print(MAXdistance);
-	Wire.onReceive(NULL);*/
+  if(SIMULATION){ //data simulation
+    MAXdistance = 80;
+    Serial.println("data simulated for MAXdistance = ");
+    Serial.print(MAXdistance);
+  }else{  //data from ESP32
+    Serial.println("Waiting for data from ESP32");
+    Wire.onReceive(maxReadGet);
+    while (!maxKnown){delay(10);Serial.print(".");delay(10);}
+    Serial.println("data arrived from ESP32 MAXdistance = "); 
+    Serial.print(MAXdistance);
+    Wire.onReceive(NULL);
+  }
 }
 
 void loop() {

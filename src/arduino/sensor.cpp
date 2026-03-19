@@ -9,7 +9,7 @@ int readDistance(int trigPin, int echoPin) {
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
 
-  duration = pulseIn(echoPin, HIGH, 30000); 
+  duration = pulseIn(echoPin, HIGH, MAXtimeout); 
   if (duration == 0) return ND;
 
   long int dist = duration / 59;

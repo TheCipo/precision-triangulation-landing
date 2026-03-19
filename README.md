@@ -32,7 +32,7 @@ Le letture degli ultrasuoni possono essere "sporche" a causa del rumore acustico
 ## 🛠️ Architettura Hardware
 Il sistema è diviso in due unità principali per ottimizzare la gestione dei compiti:
 
-* **Unità di Rilevamento (Arduino Uno):** Gestisce il timing critico dei 3 sensori HC-SR04 e pulisce il segnale.
+* **Unità di Rilevamento (Arduino Uno o Mega):** Gestisce il timing critico dei 3 sensori HC-SR04 e pulisce il segnale.
 * **Unità di Calcolo e Comando (ESP32):** Riceve le distanze, risolve le equazioni geometriche per trovare la posizione e gestisce la connessione WiFi UDP con il DJI Tello.
 
 ---
