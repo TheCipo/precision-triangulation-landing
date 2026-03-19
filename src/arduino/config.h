@@ -25,5 +25,6 @@ extern int MAXdistance;
 extern int MINdistance;
 extern int toSendDistances[3];
 extern volatile bool maxKnown;
+const int MAXtimeout = 15000; // Maximum time to wait for echo (in microseconds)
 
 #endif
