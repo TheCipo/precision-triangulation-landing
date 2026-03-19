@@ -17,7 +17,8 @@ void coordinateSensori() {
   input = readLine();
   MAXdistance = input.toInt();
   Wire.beginTransmission(RADARADRESS);
-  Wire.write((byte *)&MAXdistance, sizeof(MAXdistance));
+  Wire.write((uint8_t)(MAXdistance & 0xFF));
+  Wire.write((uint8_t)((MAXdistance >> 8) & 0xFF));
   Wire.endTransmission();
 }
 
