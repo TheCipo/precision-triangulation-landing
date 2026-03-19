@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <Preferences.h>
 
-#define MYADDRESS 0x01
+#define MYADDRESS 0x08
 #define RADARADRESS 0x10
 #define ND -9999
 
