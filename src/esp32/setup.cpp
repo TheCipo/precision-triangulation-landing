@@ -52,5 +52,5 @@ void loadSetup() {
   By = storage.getFloat("By", 0);
   Cx = storage.getFloat("Cx", 0);
   Cy = storage.getFloat("Cy", 0);
-  MAXdistance = storage.getInt("MAXdistance", ND);
+  MAXdistance = storage.getInt("MAXdistance", 80);
 }
