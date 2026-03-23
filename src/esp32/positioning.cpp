@@ -2,6 +2,11 @@
 #include "config.h"
 
 void calculatePosition(int distances[3]) {
+    if(distances[1] == ND || distances[2] == ND || distances[0] == ND) {
+        Dx = ND;
+        Dy = ND;
+        return;
+    }
     float A = 2 * (Bx - Ax);
     float B = 2 * (By - Ay);
     float C = sq(distances[0]) - sq(distances[1]) - sq(Ax) + sq(Bx) - sq(Ay) + sq(By);
