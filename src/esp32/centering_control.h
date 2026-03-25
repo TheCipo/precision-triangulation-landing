@@ -3,6 +3,6 @@
 
 #include "config.h"
 
-
+void degradedMode(int distance, int index);
 
 #endif

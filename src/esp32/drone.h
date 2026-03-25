@@ -3,6 +3,6 @@
 
 #include "config.h"
 
-
+void resetTello();
 
 #endif
