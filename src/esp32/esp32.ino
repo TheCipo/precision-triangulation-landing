@@ -39,7 +39,7 @@ void loop(){
     return;
   }
   getDistances(); //si fa mandare le distanze da Arduino
-  if(Distances[ND] ==  ND || Distances[1] == ND || Distances[2] == ND) { //controlla se tutte le distanze sono valide
+  if(Distances[0] ==  ND || Distances[1] == ND || Distances[2] == ND) { //controlla se tutte le distanze sono valide
     errorCount++;
     int index = -1; 
     for(int i = 0; i < 3; i++) { //cerca la prima distanza valida
