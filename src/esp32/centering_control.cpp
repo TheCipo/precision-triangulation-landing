@@ -21,5 +21,5 @@ void degradedMode(int distance, int index) {
   //calcola il vettore di movimento in base alla distanza e all'angolo
   float x = distance * cos(deg * PI / 180);
   float y = distance * sin(deg * PI / 180);
-  vectorToTello(x, y);
+  vectorToTello(-x, -y);
 }
