@@ -17,5 +17,12 @@ void vectorToTello(int x, int y){
 }
 
 void resetTello() {
-  //TODO: implementare reset del drone
+  drone.mon(); // abilita riconoscimento pad
+  delay(7000);
+  drone.mdirection(2); // abilita sensori frontale che verticale
+  delay(5000);
+  drone.takeoff(); // decolla
+  delay(6000);
+  drone.flyto(0, 0, 50, 50, 1); // riconosce pad 1 e si alza 50 cm e velocità 50cm/s  (x y z velocità pad)
+  delay(5000);
 }
