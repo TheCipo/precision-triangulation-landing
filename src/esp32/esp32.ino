@@ -56,6 +56,7 @@ void loop(){
       return;
     }
   }else{ // se tutte le distanze sono valide calcola la posizione
+    errorCount = 0; //reset del contatore errori
     calculatePosition(Distances); //calcolo della posizione
     Serial.print("Posizione: (");
     Serial.print(Dx);

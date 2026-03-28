@@ -3,7 +3,7 @@
 #include <Tello.h>
 
 void degradedMode(int distance, int index) {
-  serial.print("Degraded mode!");
+  serial.println("Degraded mode!");
   int deg = 0;
   switch(index) {
     case 0:
@@ -19,7 +19,9 @@ void degradedMode(int distance, int index) {
       return; // se l'indice non è valido esce
   }
   //calcola il vettore di movimento in base alla distanza e all'angolo
-  float x = distance * cos(deg * PI / 180);
-  float y = distance * sin(deg * PI / 180);
+  float cosDeg = cos(deg * PI / 180);
+  float sinDeg = sin(deg * PI / 180);
+  int x = distance * cosDeg;
+  int y = distance * sinDeg;
   vectorToTello(-x, -y);
 }

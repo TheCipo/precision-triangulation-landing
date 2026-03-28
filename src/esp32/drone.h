@@ -4,5 +4,6 @@
 #include "config.h"
 
 void resetTello();
+void vectorToTello(int x, int y);
 
 #endif
