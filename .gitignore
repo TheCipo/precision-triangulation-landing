@@ -6,6 +6,8 @@
 .vscode/
 .history/
 *.code-workspace
+.mine/
+.private/
 
 # --- File di compilazione ---
 # Cartelle generate da arduino-cli e IDE
@@ -20,3 +22,57 @@ Thumbs.db
 # --- File temporanei ---
 *.tmp
 *.log
+
+# --- Arduino / Embedded artefatti ---
+*.ino.eep
+*.ino.elf
+*.ino.hex
+*.with_bootloader.bin
+*.with_bootloader.hex
+*.partitions.bin
+*.bootloader.bin
+*.merged.bin
+arduino_debug.log
+
+# --- Artefatti C/C++ ---
+*.o
+*.obj
+*.d
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+*.pdb
+*.idb
+*.elf
+*.hex
+*.map
+
+# --- Build system comuni ---
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+
+# --- Python (script/tooling locali) ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+.env
+.env.*
+
+# --- Cache/tooling vari ---
+.cache/
+.pytest_cache/
+.mypy_cache/
+
+# --- Archivi pacchetti ---
+*.zip
+*.tar
+*.tar.gz
+*.7z
