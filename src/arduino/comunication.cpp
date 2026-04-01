@@ -5,10 +5,13 @@
 void I2C_DataSend() {
   Serial.print(MYADDRESS);
   byte buffer[6];
+
   for (int i = 0; i < 3; i++) {
-    buffer[i * 2] = lowByte(toSendDistances[i]);  // Byte basso
-    buffer[i * 2 + 1] = highByte(toSendDistances[i]); // Byte alto
+    int16_t value = (int16_t)toSendDistances[i];
+    buffer[i * 2] = (uint8_t)(value & 0xFF);
+    buffer[i * 2 + 1] = (uint8_t)((value >> 8) & 0xFF);
   }
+  
   Wire.write(buffer, 6);
   
   for(int i = 0; i < 3; i++){
@@ -20,10 +23,10 @@ void I2C_DataSend() {
 }
 
 void maxReadGet(int setupInfo) {
-  if (setupInfo >= sizeof(int)) {
-    byte lowByte = Wire.read();
-    byte highByte = Wire.read();
-    MAXdistance = (highByte << 8) | lowByte; 
-    bool maxKnown = true;  // local variable! Global never set.
+  if (setupInfo >= 2) {
+    uint8_t low = (uint8_t)Wire.read();
+    uint8_t high = (uint8_t)Wire.read();
+    MAXdistance = (int)((uint16_t)low | ((uint16_t)high << 8));
+    maxKnown = true;
   }
 }

@@ -3,5 +3,6 @@
 
 void menuConfigurazione();
 void coordinateSensori();
+void loadSetup();
 
 #endif

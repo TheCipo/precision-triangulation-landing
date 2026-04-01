@@ -3,13 +3,24 @@
 
 void getDistances() {
   Wire.requestFrom(RADARADRESS, 6); // Richiedi 6 byte (3 distanze da 2 byte ciascuna)
+
   for (int i = 0; i < 3; i++) {
     if (Wire.available() >= 2) {
-      Distances[i] = Wire.read() | (Wire.read() << 8); // Combina i due byte in un int
-    } else {
+      uint8_t low = Wire.read();
+      uint8_t high = Wire.read();
+      int16_t value = (int16_t)((uint16_t)low | ((uint16_t)high << 8));
+      Distances[i] = (int)value;
+      } else {
       Distances[i] = ND; // Se non ci sono abbastanza byte, assegna ND
     }
   }
+}
+
+void sendMAXdistance() {
+  Wire.beginTransmission(RADARADRESS);
+  Wire.write((uint8_t)(MAXdistance & 0xFF));
+  Wire.write((uint8_t)((MAXdistance >> 8) & 0xFF));
+  Wire.endTransmission();
 }
 
 String readLine(){
