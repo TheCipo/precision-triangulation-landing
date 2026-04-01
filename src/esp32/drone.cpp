@@ -23,6 +23,6 @@ void resetTello() {
   delay(5000);
   drone.takeoff(); // decolla
   delay(6000);
-  drone.flyto(0, 0, 50, 50, 1); // riconosce pad 1 e si alza 50 cm e velocità 50cm/s  (x y z velocità pad)
+  drone.flyto(0, 0, 50, 50, STARTINGPAD); // riconosce pad 1 e si alza 50 cm e velocità 50cm/s  (x y z velocità pad)
   delay(5000);
 }

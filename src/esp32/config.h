@@ -8,6 +8,7 @@
 #define RADARADRESS 0x10
 #define ND -9999
 #define MAXERRORS 10
+#define STARTINGPAD 1
 
 //global variables
 extern Preferences storage;
