@@ -16,6 +16,9 @@ void coordinateSensori() {
   Serial.print("MAXdistance = ");
   input = readLine();
   MAXdistance = input.toInt();
+  Serial.print("MINdistance = ");
+  input = readLine();
+  MINdistance = input.toInt();
 }
 
 void menuConfigurazione() {
@@ -25,6 +28,7 @@ void menuConfigurazione() {
   Serial.print("Bx = "); Serial.print(Bx); Serial.print(" By = "); Serial.println(By);
   Serial.print("Cx = "); Serial.print(Cx); Serial.print(" Cy = "); Serial.println(Cy);
   Serial.print("Distanza Massima = "); Serial.println(MAXdistance);
+  Serial.print("Distanza Minima = "); Serial.println(MINdistance);
   Serial.println("Inserisci 0 per uscire, 1 per sceglierli provvisoriamente, 2 per modificare la EEPROM: ");
   
   String input = readLine();
@@ -40,6 +44,7 @@ void menuConfigurazione() {
       storage.putFloat("Cx", Cx);
       storage.putFloat("Cy", Cy);
       storage.putInt("MAXdistance", MAXdistance);
+      storage.putInt("MINdistance", MINdistance);
       Serial.println("Salvato!");
     }
   }
@@ -53,4 +58,5 @@ void loadSetup() {
   Cx = storage.getFloat("Cx", 0);
   Cy = storage.getFloat("Cy", 0);
   MAXdistance = storage.getInt("MAXdistance", 80);
+  MINdistance = storage.getInt("MINdistance", 0);
 }
