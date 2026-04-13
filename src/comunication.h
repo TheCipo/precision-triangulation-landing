@@ -3,8 +3,6 @@
 
 #include "config.h"
 
-void getDistances();
-void sendMAXdistance();
 String readLine();
 
 #endif
