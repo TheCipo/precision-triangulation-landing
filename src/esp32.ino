@@ -33,11 +33,16 @@ void setup(){
     }
   }
   storage.end();
+
+  for(int i = 0; i < 3; i++){
+    pinMode(trigPins[i], OUTPUT);
+    pinMode(echoPins[i], INPUT);
+  }
 }
 
 void loop(){
   multiDistances[3][DATATIMES] = {ND};
-  finalDistances[3] = {ND, ND, ND};
+  int finalDistances[3] = {ND, ND, ND};
 
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < DATATIMES; j++) {
@@ -50,7 +55,7 @@ void loop(){
     finalDistances[i] = filter(multiDistances[i]);
   }
   for(int i = 0; i < 3; i++){
-     Serial.print(toSendDistances[i]);
+     Serial.print(finalDistances[i]);
      Serial.print(", ");
   }
 
