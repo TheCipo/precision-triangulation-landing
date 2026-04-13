@@ -1,6 +1,6 @@
 # Precision Triangulation Landing 🛸
 
-Sistema di localizzazione e guida di precisione per droni **DJI Tello** basato sulla trilaterazione mediante sensori a ultrasuoni e microcontrollori ESP32/Arduino.
+Sistema di localizzazione e guida di precisione per droni **DJI Tello** basato sulla trilaterazione mediante sensori a ultrasuoni e microcontrollore ESP32.
 
 ---
 
@@ -8,7 +8,7 @@ Sistema di localizzazione e guida di precisione per droni **DJI Tello** basato s
 Il progetto si configura attualmente come un **Proof of Concept (PoC)** focalizzato sulla localizzazione spaziale. 
 
 * **Completato:** Rilevamento distanze, filtraggio dati (mediana) e calcolo coordinate $(x, y)$ visualizzate su monitor seriale.
-* **In Sviluppo:** Trasmissione dati tra Arduino e ESP32 e implementazione del sistema di controllo remoto via WiFi per il drone.
+* **In Sviluppo:** Implementazione del sistema di controllo remoto via WiFi per il drone.
 
 ---
 
@@ -29,18 +29,8 @@ Le letture degli ultrasuoni possono essere "sporche" a causa del rumore acustico
 
 ---
 
-## 🛠️ Architettura Hardware
-Il sistema è diviso in due unità principali per ottimizzare la gestione dei compiti:
-
-* **Unità di Rilevamento (Arduino Uno o Mega):** Gestisce il timing critico dei 3 sensori HC-SR04 e pulisce il segnale.
-* **Unità di Calcolo e Comando (ESP32):** Riceve le distanze, risolve le equazioni geometriche per trovare la posizione e gestisce la connessione WiFi UDP con il DJI Tello.
-
----
-
 ## 📂 Struttura delle Cartelle
 * `src/`: Contiene il codice sorgente.
-    * `arduino/`: Contiene il codice di Arduino.
-    * `esp32/`: Contiene il codice di ESP32.
 * `docs/`: Documentazione di progetto e presentazioni scolastiche.
 * `libs/`: Eventuali librerie per la gestione del sensore o del drone.
 
