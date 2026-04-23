@@ -3,6 +3,6 @@
 
 #include "config.h"
 
-String readLine();
+String readLine(); //funzione per leggere una riga dalla seriale
 
 #endif
