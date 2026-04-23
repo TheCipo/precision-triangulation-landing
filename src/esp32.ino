@@ -9,41 +9,43 @@
 #include "secrets.h"
 
 //inizializzazione variabili globali
-Preferences storage;
-float Ax, Ay, Bx, By, Cx, Cy;
-float Dx, Dy;
-int MAXdistance = 80;
-int MINdistance = 2;
-int Distances[3];
-int multiDistances[3][DATATIMES];
-int finalDistances[3];
-bool error = false;
+Preferences storage; //archiviazione dati di configurazione
+float Ax, Ay, Bx, By, Cx, Cy; //coordinare dei sensori
+float Dx, Dy; //coordinare del drone
+int MAXdistance = 80; //distanza massima misurabile dai sensori
+int MINdistance = 2; //distanza minima misurabile dai sensori
+int multiDistances[3][DATATIMES]; //distanze raccolte da filtrare
+int finalDistances[3]; //distanze finali dopo il filtro
+bool error = false; //variabile per segnalare errori di misurazione
 
 void setup(){
-  storage.begin("landing", false);
-  Wire.begin();
-  Serial.begin(9600);
+  storage.begin("landing", false); //inizializzazione del Preferences storage
+  Wire.begin(); //inizializzazione del bus I2C
+  Serial.begin(9600); //inizializzazione della seriale
+  //menu di configurazione
   Serial.println("Invia un tasto entro 10s per il setup...");
   unsigned long startT = millis();
   loadSetup();
   while (millis() - startT < 10000) {
     if (Serial.available()) {
-      menuConfigurazione();
+      menuConfigurazione(); //apertura del menu di configurazione se viene ricevuto un input entro 10 secondi
       break;
     }
   }
-  storage.end();
+  storage.end(); //chiusura del Preferences storage
 
-  for(int i = 0; i < 3; i++){
+  for(int i = 0; i < 3; i++){ //configurazione dei pin dei sensori
     pinMode(trigPins[i], OUTPUT);
     pinMode(echoPins[i], INPUT);
   }
 }
 
 void loop(){
+  //pulizia dei dati precedenti
   multiDistances[3][DATATIMES] = {ND};
   int finalDistances[3] = {ND, ND, ND};
 
+  //raccolta dei dati dai sensori
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < DATATIMES; j++) {
       int d = readDistance(trigPins[i], echoPins[i]);
@@ -51,15 +53,19 @@ void loop(){
       delay(60);
     }
   }
+  //filtro dei dati raccolti
   for (int i = 0; i < 3; i++) {
     finalDistances[i] = filter(multiDistances[i]);
   }
+  //stampa delle distanze filtrate per debugging
   for(int i = 0; i < 3; i++){
      Serial.print(finalDistances[i]);
      Serial.print(", ");
   }
 
-  calculatePosition(finalDistances);
+  calculatePosition(finalDistances); //calcolo della posizione del drone
+  
+  //stampa della posizione calcolata per debugging
   Serial.print("Posizione: (");
   Serial.print(Dx);
   Serial.print(", ");
