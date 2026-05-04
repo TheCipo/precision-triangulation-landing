@@ -18,6 +18,8 @@ int multiDistances[3][DATATIMES]; //distanze raccolte da filtrare
 int finalDistances[3]; //distanze finali dopo il filtro
 bool error = false; //variabile per segnalare errori di misurazione
 int errorCount = 0; //contatore di errori consecutivi
+int padIndex = 0; //indice del pad attualmente tracciato (0, 1 o 2)
+bool padVector[2]; //vettore per tracciare dove si trova il pad (0: x, 1: y)
 
 void setup(){
   storage.begin("landing", false); //inizializzazione del Preferences storage

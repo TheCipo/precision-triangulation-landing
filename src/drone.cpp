@@ -1,5 +1,6 @@
 #include "drone.h"
 #include <Tello.h>
+#include "config.h"
 
 Tello drone;
 
@@ -25,4 +26,7 @@ void resetTello() {
   delay(6000);
   drone.flyto(0, 0, 50, 50, STARTINGPAD); // riconosce pad 1 e si alza 50 cm e velocità 50cm/s  (x y z velocità pad)
   delay(5000);
+  vectorToTello(-padVector[0], -padVector[1]); // muove il drone in base alla posizione del pad
+  delay(5000);
 }
+

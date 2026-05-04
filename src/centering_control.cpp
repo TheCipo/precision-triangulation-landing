@@ -3,7 +3,7 @@
 #include <Tello.h>
 
 void degradedMode(int distance, int index) {
-  serial.println("Degraded mode!");
+  Serial.println("Degraded mode!");
   int deg = 0;
   switch(index) {
     case 0:
