@@ -17,6 +17,7 @@ int MINdistance = 2; //distanza minima misurabile dai sensori
 int multiDistances[3][DATATIMES]; //distanze raccolte da filtrare
 int finalDistances[3]; //distanze finali dopo il filtro
 bool error = false; //variabile per segnalare errori di misurazione
+int errorCount = 0; //contatore di errori consecutivi
 
 void setup(){
   storage.begin("landing", false); //inizializzazione del Preferences storage
@@ -44,6 +45,11 @@ void loop(){
   //pulizia dei dati precedenti
   multiDistances[3][DATATIMES] = {ND};
   int finalDistances[3] = {ND, ND, ND};
+  if(errorCount > MAXERRORS) { // se ci sono troppi errori ricomincia da capo
+    resetTello();
+    errorCount = 0;
+    return;
+  }
 
   //raccolta dei dati dai sensori
   for (int i = 0; i < 3; i++) {
@@ -63,12 +69,32 @@ void loop(){
      Serial.print(", ");
   }
 
-  calculatePosition(finalDistances); //calcolo della posizione del drone
-  
-  //stampa della posizione calcolata per debugging
-  Serial.print("Posizione: (");
-  Serial.print(Dx);
-  Serial.print(", ");
-  Serial.print(Dy);
-  Serial.println(")");
+  if(Distances[0] ==  ND || Distances[1] == ND || Distances[2] == ND) { //controlla se tutte le distanze sono valide
+    errorCount++; //incrementa il contatore di errori
+    int index = -1; 
+    for(int i = 0; i < 3; i++) { //cerca la prima distanza valida
+      if(Distances[i] != ND) {
+        index = i;
+        break;
+      }
+    }
+
+    if(index >= 0 && index <= 2){ //se c'è alemno una distanza valida fa un ciclo in Degraded Mode
+      degradedMode(Distances[index], index);
+    }else{ //se non c'è nessuna distanza valida ricomincia
+      Serial.print("impossibile calcolare la posizione errore: ");
+      Serial.println(errorCount);
+      return;
+    }
+
+  }else{ // se tutte le distanze sono valide calcola la posizione
+    errorCount = 0; //reset del contatore errori
+    calculatePosition(finalDistances); //calcolo della posizione del drone
+    //stampa della posizione calcolata per debugging
+    Serial.print("Posizione: (");
+    Serial.print(Dx);
+    Serial.print(", ");
+    Serial.print(Dy);
+    Serial.println(")");
+  }
 }
