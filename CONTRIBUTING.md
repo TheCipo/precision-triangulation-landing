@@ -15,6 +15,34 @@ Quando aprite il progetto su GitHub dal browser, ecco cosa dovete guardare:
 
 ---
 
+## 🔄 Flusso di Sviluppo: Issue → Branch → PR
+
+Per portare nuove implementazioni nel codice, seguiamo questo flusso rigoroso per mantenere ordine e qualità:
+
+### 1. **Crea un'Issue**
+   - Vai su GitHub e apri una nuova Issue nella scheda **Issues**.
+   - Descrivi chiaramente il compito: cosa implementare, perché, e eventuali dettagli tecnici (es: "Implementare comunicazione WiFi con DJI Tello per comandi di volo").
+   - Assegna etichette appropriate (es: `enhancement`, `bug`) e collegala al progetto se necessario.
+   - Discuti con il team per confermare l'approccio.
+
+### 2. **Crea un Branch collegato all'Issue**
+   - In VS Code, crea un nuovo branch dal `main` (vedi sezione sotto).
+   - Nomina il branch con il numero dell'Issue (es: `issue-11-wifi-tello` o `feature-issue-11`).
+   - Questo collega automaticamente il branch all'Issue su GitHub.
+
+### 3. **Implementa e Testa**
+   - Scrivi il codice seguendo la struttura modulare (vedi sotto).
+   - Compila e testa prima di committare.
+   - Fai commit frequenti con messaggi chiari.
+
+### 4. **Apri una Pull Request (PR)**
+   - Dopo il push, vai su GitHub e crea una PR dal tuo branch verso `main`.
+   - Descrivi le modifiche e collega l'Issue (es: "Closes #11").
+   - Assegna reviewer e aspetta l'approvazione prima del merge.
+   - **Regola:** Nessun merge senza almeno un'approvazione.
+
+---
+
 ## 💻 Come lavorare con VS Code (Senza terminale)
 
 Usate l'icona **"Source Control"** (quella con i tre nodi) sul lato sinistro di VS Code.
@@ -38,13 +66,45 @@ Mentre scrivi il codice:
 
 ---
 
+## 📋 Struttura del Codice nei File
+
+Il codice è organizzato in moduli separati per facilitare la manutenzione e lo sviluppo. Ogni modulo ha un file `.cpp` per l'implementazione e un `.h` per le dichiarazioni. Ecco una panoramica breve:
+
+* **`esp32.ino`**: File principale Arduino per ESP32. Gestisce il setup, loop e orchestrazione dei moduli.
+* **`sensor.cpp/h`**: Gestione dei sensori HC-SR04. Lettura distanze, validazione e timeout.
+* **`filter.cpp/h`**: Filtraggio dati con mediana su 21 campioni per ridurre rumore.
+* **`positioning.cpp/h`**: Calcolo trilaterazione per determinare coordinate (x, y) del drone.
+* **`setup.cpp/h`**: Configurazione runtime e calibrazione sensori (menu seriale, storage flash).
+* **`comunication.cpp/h`**: Interfaccia seriale per input/output (lettura linee, debug).
+* **`drone.cpp/h`**: Placeholder per controllo drone DJI Tello (WiFi, comandi volo).
+* **`centering_control.cpp/h`**: Placeholder per logica di centraggio e atterraggio.
+* **`config.h`**: Costanti globali (pin GPIO, limiti distanze, numero campioni).
+* **`secrets.h`**: Credenziali segrete (WiFi, non committato).
+
+Ogni nuovo pezzo di codice deve seguire questa struttura modulare: separa logica in funzioni, usa header per dichiarazioni, e mantieni dipendenze chiare.
+
+---
+
+## 🛠️ Come Implementare Nuove Funzionalità
+
+Quando aggiungi una nuova feature:
+1. **Pianifica**: Discuti nell'Issue e decidi in quale modulo inserire (o creane uno nuovo se necessario).
+2. **Struttura**: Ogni funzione deve avere un header chiaro, commenti, e validazione input.
+3. **Testa**: Verifica che non rompa il resto (compila, loop funziona).
+4. **Documenta**: Aggiorna README o Wiki con la nuova logica.
+5. **Commit**: Messaggi specifici (es: "Implementato invio comandi UDP a Tello").
+
+Per nuovi moduli: Crea coppia `.cpp/.h`, includi nel `esp32.ino`, e aggiorna `config.h` se servono nuove costanti.
+
+---
+
 ## 🔄 Il Flusso delle Pull Request (Revisione)
 
 Una volta fatto il Push da VS Code:
 1.  Vai sul sito di GitHub nella scheda **Pull Requests**.
 2.  Clicca su **"Compare & pull request"**.
 3.  Assegna un compagno come **Reviewer**.
-4.  **Regola d'oro:** Non fare mai il "Merge" (unione) da solo. Aspetta che un compagno legga il codice, lasci un commento o un "Approve".
+4.  **Regola d'oro:** Non fare mai il "Merge" (unione) da solo. Aspetta che un compagno legga il codice, lasci un commento o un "Approve". Ogni PR deve essere autorizzata da almeno un reviewer prima del merge.
 
 ---
 

@@ -4,15 +4,17 @@
 #include <Preferences.h>
 #include <Wire.h>
 
-void coordinateSensori() {
-  Serial.print("R (raggio) = ");
+void coordinateSensori() { //leggere le cordinate dei sensori da seriale
+  Serial.print("R (raggio) = "); //richiesta del raggio del triangolo formato dai sensori, che determina la posizione dei sensori stessi
   String input = readLine();
   float R = input.toFloat();
 
+  //calcolo delle coordinate dei sensori in base al raggio e alla disposizione circolare
   Ax = 0; Ay = R;
   Bx = R * sqrt(3) / 2.0; By = -R / 2.0;
   Cx = -R * sqrt(3) / 2.0; Cy = -R / 2.0;
 
+  //richiesta della distanza massima e minima misurabile dai sensori
   Serial.print("MAXdistance = ");
   input = readLine();
   MAXdistance = input.toInt();
@@ -21,7 +23,8 @@ void coordinateSensori() {
   MINdistance = input.toInt();
 }
 
-void menuConfigurazione() {
+void menuConfigurazione() { 
+  //stampa del menu di configurazione
   Serial.println("Entrato in modalità setup.");
   Serial.println("Coordinate dei Sensori:");
   Serial.print("Ax = "); Serial.print(Ax); Serial.print(" Ay = "); Serial.println(Ay);
@@ -29,14 +32,15 @@ void menuConfigurazione() {
   Serial.print("Cx = "); Serial.print(Cx); Serial.print(" Cy = "); Serial.println(Cy);
   Serial.print("Distanza Massima = "); Serial.println(MAXdistance);
   Serial.print("Distanza Minima = "); Serial.println(MINdistance);
-  Serial.println("Inserisci 0 per uscire, 1 per sceglierli provvisoriamente, 2 per modificare la EEPROM: ");
+  Serial.println("Inserisci 0 per uscire, 1 per sceglierli provvisoriamente, 2 per modificare la EEPROM/FLASH: ");
   
+  // selettore della modalità di configurazione
   String input = readLine();
   int scelta = input.toInt();
 
   if (scelta == 1 || scelta == 2) {
-    coordinateSensori();
-    if (scelta == 2) {
+    coordinateSensori(); //impostazione delle coordinate dei sensori e delle variabili di riferimento
+    if (scelta == 2) { //salvataggio delle coordinate dei sensori e delle variabili di riferimento nella EEPROM/FLASH
       storage.putFloat("Ax", Ax);
       storage.putFloat("Ay", Ay);
       storage.putFloat("Bx", Bx);
@@ -51,6 +55,7 @@ void menuConfigurazione() {
 }
 
 void loadSetup() {
+  //caricamento delle coordinate dei sensori e delle variabili di riferimento dalla EEPROM/FLASH
   Ax = storage.getFloat("Ax", 0);
   Ay = storage.getFloat("Ay", 0);
   Bx = storage.getFloat("Bx", 0);
