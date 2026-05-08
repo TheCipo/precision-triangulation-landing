@@ -29,5 +29,6 @@ const int MAXtimeout = 15000; // Maximum time to wait for echo (in microseconds)
 extern int errorCount; // Counter for consecutive errors
 extern int padIndex; // Index of the pad currently being tracked (0, 1, or 2)
 extern bool padVector[2]; // Vector to track were the pad is locate (0: x, 1: y)
+extern bool connected; // Variable to indicate if the drone is connected to WiFi  
 
 #endif

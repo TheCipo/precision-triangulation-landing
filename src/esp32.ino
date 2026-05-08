@@ -1,4 +1,5 @@
 #include <Wire.h>
+#include <WiFi.h>
 #include "config.h"
 #include "positioning.h"
 #include "drone.h"
@@ -20,6 +21,7 @@ bool error = false; //variabile per segnalare errori di misurazione
 int errorCount = 0; //contatore di errori consecutivi
 int padIndex = 0; //indice del pad attualmente tracciato (0, 1 o 2)
 bool padVector[2]; //vettore per tracciare dove si trova il pad (0: x, 1: y)
+bool connected = false; //variabile per segnalare se il drone è connesso al WiFi
 
 void setup(){
   storage.begin("landing", false); //inizializzazione del Preferences storage
@@ -41,6 +43,8 @@ void setup(){
     pinMode(trigPins[i], OUTPUT);
     pinMode(echoPins[i], INPUT);
   }
+
+  connectToWiFi(networkName, networkPswd); //connessione al drone tramite WiFi
 }
 
 void loop(){
