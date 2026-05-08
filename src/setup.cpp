@@ -30,6 +30,9 @@ void coordinateSensori() { //leggere le cordinate dei sensori da seriale
   Serial.print("pad index = ");
   input = readLine();
   padIndex = input.toInt();
+  Serial.print("Accepted distance error = ");
+  input = readLine();
+  aceptedDistanceError = input.toInt();
 }
 
 void menuConfigurazione() { 
@@ -43,7 +46,8 @@ void menuConfigurazione() {
   Serial.print("Distanza Minima = "); Serial.println(MINdistance);
   Serial.print("PadZero X = "); Serial.println(padVector[0]);
   Serial.print("PadZero Y = "); Serial.println(padVector[1]);
-  Serial.print("pad index = "); Serial.println(padIndex);
+  Serial.print("Pad index = "); Serial.println(padIndex);
+  Serial.print("Accepted distance error = "); Serial.println(aceptedDistanceError);
   Serial.println("Inserisci 0 per uscire, 1 per sceglierli provvisoriamente, 2 per modificare la EEPROM/FLASH: ");
   
   // selettore della modalità di configurazione
@@ -64,6 +68,7 @@ void menuConfigurazione() {
       storage.putInt("padZeroX", padVector[0]);
       storage.putInt("padZeroY", padVector[1]);
       storage.putInt("padIndex", padIndex);
+      storage.putInt("aceptedDistanceError", aceptedDistanceError);
       Serial.println("Salvato!");
     }
   }
@@ -82,4 +87,5 @@ void loadSetup() {
   padVector[0] = storage.getInt("padZeroX", 0);
   padVector[1] = storage.getInt("padZeroY", 0);
   padIndex = storage.getInt("padIndex", 0);
+  aceptedDistanceError = storage.getInt("aceptedDistanceError", 5);
 }

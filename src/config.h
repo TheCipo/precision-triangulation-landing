@@ -28,7 +28,9 @@ extern int Distances[3]; //inizializzazione dell'array per memorizzare le distan
 const int MAXtimeout = 15000; // Maximum time to wait for echo (in microseconds)
 extern int errorCount; // Counter for consecutive errors
 extern int padIndex; // Index of the pad currently being tracked (0, 1, or 2)
-extern bool padVector[2]; // Vector to track were the pad is locate (0: x, 1: y)
-extern bool connected; // Variable to indicate if the drone is connected to WiFi  
+extern int aceptedDistanceError; // Threshold for accepting distance measurements as valid (in cm)
+extern bool padVector[2]; // Vector to track where the pad is located (0: x, 1: y)
+extern bool connected; // Variable to indicate if the drone is connected to WiFi
+extern bool landed; // Variable to indicate if the drone has landed
 
 #endif

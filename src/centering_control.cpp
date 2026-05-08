@@ -1,6 +1,7 @@
 #include "centering_control.h"
 #include "drone.h"
 #include <Tello.h>
+#include "config.h"
 
 void degradedMode(int distance, int index) {
   Serial.println("Degraded mode!");
@@ -11,4 +12,17 @@ void degradedMode(int distance, int index) {
   int x = distance * cosDeg;
   int y = distance * sinDeg;
   vectorToTello(-x, -y);
+}
+
+void stdMode(int x, int y) {
+  int distance = sqrt(x * x + y * y); // calcola la distanza dal centro del pad
+  if (distance < aceptedDistanceError) { // se la distanza è inferiore alla soglia di accettazione, considera il drone centrato
+    Serial.println("Drone Centered!");
+    drone.land();
+    landed = true;
+  } else {
+    Serial.println("Drone Not centered!");
+    vectorToTello(-x, -y);
+    landed = false; 
+  }
 }

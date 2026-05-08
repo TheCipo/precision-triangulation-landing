@@ -22,6 +22,8 @@ int errorCount = 0; //contatore di errori consecutivi
 int padIndex = 0; //indice del pad attualmente tracciato (0, 1 o 2)
 bool padVector[2]; //vettore per tracciare dove si trova il pad (0: x, 1: y)
 bool connected = false; //variabile per segnalare se il drone è connesso al WiFi
+bool landed = false; //variabile per segnalare se il drone è atterrato
+int aceptedDistanceError = 5; //soglia per accettare le misurazioni delle distanze come valide (in cm)
 
 void setup(){
   storage.begin("landing", false); //inizializzazione del Preferences storage
@@ -45,6 +47,7 @@ void setup(){
   }
 
   connectToWiFi(networkName, networkPswd); //connessione al drone tramite WiFi
+  resetTello(); //reset del drone per portarlo alla posizione di partenza
 }
 
 void loop(){
@@ -57,50 +60,53 @@ void loop(){
     return;
   }
 
-  //raccolta dei dati dai sensori
-  for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < DATATIMES; j++) {
-      int d = readDistance(trigPins[i], echoPins[i]);
-      multiDistances[i][j] = d;
-      delay(60);
-    }
-  }
-  //filtro dei dati raccolti
-  for (int i = 0; i < 3; i++) {
-    finalDistances[i] = filter(multiDistances[i]);
-  }
-  //stampa delle distanze filtrate per debugging
-  for(int i = 0; i < 3; i++){
-     Serial.print(finalDistances[i]);
-     Serial.print(", ");
-  }
-
-  if(Distances[0] ==  ND || Distances[1] == ND || Distances[2] == ND) { //controlla se tutte le distanze sono valide
-    errorCount++; //incrementa il contatore di errori
-    int index = -1; 
-    for(int i = 0; i < 3; i++) { //cerca la prima distanza valida
-      if(Distances[i] != ND) {
-        index = i;
-        break;
+  if(!landed){ //se il drone non è atterrato continua a cercare di centrarlo
+    //raccolta dei dati dai sensori
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < DATATIMES; j++) {
+        int d = readDistance(trigPins[i], echoPins[i]);
+        multiDistances[i][j] = d;
+        delay(60);
       }
     }
-
-    if(index >= 0 && index <= 2){ //se c'è alemno una distanza valida fa un ciclo in Degraded Mode
-      degradedMode(Distances[index], index);
-    }else{ //se non c'è nessuna distanza valida ricomincia
-      Serial.print("impossibile calcolare la posizione errore: ");
-      Serial.println(errorCount);
-      return;
+    //filtro dei dati raccolti
+    for (int i = 0; i < 3; i++) {
+      finalDistances[i] = filter(multiDistances[i]);
+    }
+    //stampa delle distanze filtrate per debugging
+    for(int i = 0; i < 3; i++){
+      Serial.print(finalDistances[i]);
+      Serial.print(", ");
     }
 
-  }else{ // se tutte le distanze sono valide calcola la posizione
-    errorCount = 0; //reset del contatore errori
-    calculatePosition(finalDistances); //calcolo della posizione del drone
-    //stampa della posizione calcolata per debugging
-    Serial.print("Posizione: (");
-    Serial.print(Dx);
-    Serial.print(", ");
-    Serial.print(Dy);
-    Serial.println(")");
+    if(Distances[0] ==  ND || Distances[1] == ND || Distances[2] == ND) { //controlla se tutte le distanze sono valide
+      errorCount++; //incrementa il contatore di errori
+      int index = -1; 
+      for(int i = 0; i < 3; i++) { //cerca la prima distanza valida
+        if(Distances[i] != ND) {
+          index = i;
+          break;
+        }
+      }
+
+      if(index >= 0 && index <= 2){ //se c'è alemno una distanza valida fa un ciclo in Degraded Mode
+        degradedMode(Distances[index], index);
+      }else{ //se non c'è nessuna distanza valida ricomincia
+        Serial.print("impossibile calcolare la posizione errore: ");
+        Serial.println(errorCount);
+        return;
+      }
+
+    }else{ // se tutte le distanze sono valide calcola la posizione
+      errorCount = 0; //reset del contatore errori
+      calculatePosition(finalDistances); //calcolo della posizione del drone
+      //stampa della posizione calcolata per debugging
+      Serial.print("Posizione: (");
+      Serial.print(Dx);
+      Serial.print(", ");
+      Serial.print(Dy);
+      Serial.println(")");
+      stdMode(Dx, Dy); //controllo per centrare il drone
+    }
   }
 }
