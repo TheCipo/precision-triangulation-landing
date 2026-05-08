@@ -4,20 +4,7 @@
 
 void degradedMode(int distance, int index) {
   Serial.println("Degraded mode!");
-  int deg = 0;
-  switch(index) {
-    case 0:
-      deg = 0;
-      break;
-    case 1:
-      deg = 120;
-      break;
-    case 2:
-      deg = 240;
-      break;
-    default:
-      return; // se l'indice non è valido esce
-  }
+  int deg = 120 * index; // calcola l'angolo in base all'indice del sensore
   //calcola il vettore di movimento in base alla distanza e all'angolo
   float cosDeg = cos(deg * PI / 180);
   float sinDeg = sin(deg * PI / 180);
