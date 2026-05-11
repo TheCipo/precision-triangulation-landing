@@ -2,6 +2,7 @@
 #define DRONE_H
 
 #include "config.h"
+#include "tello.h"
 
 extern Tello drone;
 

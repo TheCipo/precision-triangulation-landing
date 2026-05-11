@@ -1,6 +1,6 @@
 #include "centering_control.h"
 #include "drone.h"
-#include <tello.h>
+#include "tello.h"
 #include "config.h"
 
 void degradedMode(int distance, int index) {
@@ -16,7 +16,7 @@ void degradedMode(int distance, int index) {
 
 void stdMode(int x, int y) {
   int distance = sqrt(x * x + y * y); // calcola la distanza dal centro del pad
-  if (distance < aceptedDistanceError) { // se la distanza è inferiore alla soglia di accettazione, considera il drone centrato
+  if (distance < acceptedDistanceError) { // se la distanza è inferiore alla soglia di accettazione, considera il drone centrato
     Serial.println("Drone Centered!");
     drone.land();
     landed = true;

@@ -1,5 +1,5 @@
 #include "drone.h"
-#include <tello.h>
+#include "tello.h"
 #include "config.h"
 
 Tello drone;
@@ -13,7 +13,7 @@ void vectorToTello(int x, int y){
   if (y > 0) { // se y è positivo, muovi in avanti
     drone.forward(y);
   } else if (y < 0) { // se y è negativo, muovi indietro
-    drone.backward(-y);
+    drone.back(-y);
   }
 }
 

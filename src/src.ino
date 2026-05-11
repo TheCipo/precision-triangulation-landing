@@ -3,6 +3,7 @@
 #include "config.h"
 #include "positioning.h"
 #include "drone.h"
+#include "comunication.h"
 #include "setup.h"
 #include "centering_control.h"
 #include "sensor.h"
@@ -20,10 +21,10 @@ int finalDistances[3]; //distanze finali dopo il filtro
 bool error = false; //variabile per segnalare errori di misurazione
 int errorCount = 0; //contatore di errori consecutivi
 int padIndex = 0; //indice del pad attualmente tracciato (0, 1 o 2)
-bool padVector[2]; //vettore per tracciare dove si trova il pad (0: x, 1: y)
+int padVector[2]; //vettore per tracciare dove si trova il pad (0: x, 1: y)
 bool connected = false; //variabile per segnalare se il drone è connesso al WiFi
 bool landed = false; //variabile per segnalare se il drone è atterrato
-int aceptedDistanceError = 5; //soglia per accettare le misurazioni delle distanze come valide (in cm)
+int acceptedDistanceError = 5; //soglia per accettare le misurazioni delle distanze come valide (in cm)
 
 void setup(){
   storage.begin("landing", false); //inizializzazione del Preferences storage
@@ -52,7 +53,6 @@ void setup(){
 
 void loop(){
   //pulizia dei dati precedenti
-  multiDistances[3][DATATIMES] = {ND};
   int finalDistances[3] = {ND, ND, ND};
   if(errorCount > MAXERRORS) { // se ci sono troppi errori ricomincia da capo
     resetTello();
@@ -79,18 +79,18 @@ void loop(){
       Serial.print(", ");
     }
 
-    if(Distances[0] ==  ND || Distances[1] == ND || Distances[2] == ND) { //controlla se tutte le distanze sono valide
+    if(finalDistances[0] == ND || finalDistances[1] == ND || finalDistances[2] == ND) { //controlla se tutte le distanze sono valide
       errorCount++; //incrementa il contatore di errori
       int index = -1; 
       for(int i = 0; i < 3; i++) { //cerca la prima distanza valida
-        if(Distances[i] != ND) {
+        if(finalDistances[i] != ND) {
           index = i;
           break;
         }
       }
 
-      if(index >= 0 && index <= 2){ //se c'è alemno una distanza valida fa un ciclo in Degraded Mode
-        degradedMode(Distances[index], index);
+      if(index >= 0 && index <= 2){ //se c'è almeno una distanza valida fa un ciclo in Degraded Mode
+        degradedMode(finalDistances[index], index);
       }else{ //se non c'è nessuna distanza valida ricomincia
         Serial.print("impossibile calcolare la posizione errore: ");
         Serial.println(errorCount);

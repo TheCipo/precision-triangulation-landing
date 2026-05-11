@@ -33,7 +33,7 @@ void connectToWiFi(const char * ssid, const char * pwd)
 //wifi event handler
 void WiFiEvent(WiFiEvent_t event){
   switch (event){
-  case SYSTEM_EVENT_STA_GOT_IP: //When connected set
+  case IP_EVENT_STA_GOT_IP: //When connected set
     Serial.print("WiFi connected! IP address: ");
     Serial.println(WiFi.localIP()); //initialise Tello after we are connected
     
@@ -42,7 +42,7 @@ void WiFiEvent(WiFiEvent_t event){
     connected = true;
     break;
     
-  case SYSTEM_EVENT_STA_DISCONNECTED:
+  case WIFI_EVENT_STA_DISCONNECTED:
     Serial.println("WiFi lost connection");
     connected = false;
     break;
