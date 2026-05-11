@@ -1,5 +1,5 @@
 #include "drone.h"
-#include <Tello.h>
+#include <tello.h>
 #include "config.h"
 
 Tello drone;

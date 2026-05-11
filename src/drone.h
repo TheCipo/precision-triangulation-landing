@@ -3,6 +3,8 @@
 
 #include "config.h"
 
+extern Tello drone;
+
 void resetTello();
 void vectorToTello(int x, int y);
 

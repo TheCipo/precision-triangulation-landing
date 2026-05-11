@@ -2,6 +2,7 @@
 #include <Wire.h>
 #include <WiFi.h>
 #include "config.h"
+#include "drone.h"
 
 String readLine(){
   String datoricevuto = ""; //crea la stringa vuota

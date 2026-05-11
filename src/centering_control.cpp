@@ -1,6 +1,6 @@
 #include "centering_control.h"
 #include "drone.h"
-#include <Tello.h>
+#include <tello.h>
 #include "config.h"
 
 void degradedMode(int distance, int index) {
