@@ -14,6 +14,7 @@ void vectorToTello(int x, int y){
   } else if (x < 0) { // se x è negativo, muovi a sinistra
     drone.left(-x);
   }
+  delay(5000); // aggiungi un piccolo ritardo tra i comandi per evitare sovraccarichi
   if (y > 0) { // se y è positivo, muovi in avanti
     drone.forward(y);
   } else if (y < 0) { // se y è negativo, muovi indietro
