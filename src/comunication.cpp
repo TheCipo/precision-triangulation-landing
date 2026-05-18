@@ -22,29 +22,18 @@ void connectToWiFi(const char * ssid, const char * pwd)
   Serial.println("Connecting to WiFi network: " + String(ssid));
   WiFi.disconnect(true);
   //register event handler
-  WiFi.onEvent(WiFiEvent);
 
   //Initiate connection
   WiFi.begin(ssid, pwd);
 
   Serial.println("Waiting for WIFI connection...");
-}
-
-//wifi event handler
-void WiFiEvent(WiFiEvent_t event){
-  switch (event){
-  case IP_EVENT_STA_GOT_IP: //When connected set
-    Serial.print("WiFi connected! IP address: ");
-    Serial.println(WiFi.localIP()); //initialise Tello after we are connected
-    
-    drone.init();
-    
-    connected = true;
-    break;
-    
-  case WIFI_EVENT_STA_DISCONNECTED:
-    Serial.println("WiFi lost connection");
-    connected = false;
-    break;
-  }
+  while (WiFi.status() != WL_CONNECTED) {
+   delay(1000);
+   Serial.print(".");
+ }
+  Serial.println("\nConnected to WiFi!");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+  drone.init();
+  connected = true;
 }
