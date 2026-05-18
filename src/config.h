@@ -6,9 +6,8 @@
 #include "secrets.h"
 
 #define ND -9999
-#define DATATIMES 21 //numero di campioni da memorizzare per ogni sensore (20 + 1 per il filtro)
+#define DATATIMES 5 //numero di campioni da memorizzare per ogni sensore (20 + 1 per il filtro)
 #define MAXERRORS 10 //numero massimo di errori consecutivi prima di entrare in modalità degradata
-#define STARTINGPAD 1 //numero pad di partenza (1, 2 o 3)
 
 // Pin definitions
 const int trigPins[3] = {23, 19, 17}; //definizione dei pin dei trigger dei sensori
@@ -31,5 +30,6 @@ extern int acceptedDistanceError; // Threshold for accepting distance measuremen
 extern int padVector[2]; // Vector to track where the pad is located (0: x, 1: y)
 extern bool connected; // Variable to indicate if the drone is connected to WiFi
 extern bool landed; // Variable to indicate if the drone has landed
+extern int finalDistances[3]; // Distances collected
 
 #endif

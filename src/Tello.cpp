@@ -27,17 +27,22 @@ Tello::~Tello()
 
 void Tello::init()
 {
+	delay(10000);
 	udpclient = new WiFiUDP();
 	//This initializes udp and transfer buffer
 	udpclient->begin(COMMAND_PORT);
 	isInitialised = true;
 	string response = sendCommand("command");
 
-	//if response is other than "ok" then we consider as error 
+	while(!response.compare("ok")){
+		response = sendCommand("command");
+	}
+
+	/*//if response is other than "ok" then we consider as error 
 	if(response.compare("ok"))
 	{
 		isInitialised = true;
-	}
+	}*/
 }
 
 
