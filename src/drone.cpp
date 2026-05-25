@@ -9,17 +9,34 @@ void vectorToTello(int x, int y){
     return;
   }
   
-  if (x > 0) { // se x è positivo, muovi a destra
+  if (x > 0 && x < 20) { // se x è positivo, muovi a destra
+    drone.right(20 + x);
+    delay(5000); // aggiungi un piccolo ritardo tra i comandi per evitare sovraccarichi
+    drone.left(20);
+  } else if (x < 0 && x > -20) { // se x è negativo, muovi a sinistra
+    drone.left(20 - x);
+    delay(5000); // aggiungi un piccolo ritardo tra i comandi per evitare sovraccarichi
+    drone.right(20);
+  } else if (x >= 20) { // se x è maggiore o uguale a 20, muovi a destra di 20 cm
     drone.right(x);
-  } else if (x < 0) { // se x è negativo, muovi a sinistra
+  } else if (x <= -20) { // se x è minore o uguale a -20, muovi a sinistra di 20 cm
     drone.left(-x);
   }
   delay(5000); // aggiungi un piccolo ritardo tra i comandi per evitare sovraccarichi
-  if (y > 0) { // se y è positivo, muovi in avanti
+  if (y > 0 && y < 20) { // se y è positivo, muovi in avanti
+    drone.forward(20 + y);
+    delay(5000); // aggiungi un piccolo ritardo tra i comandi per evitare sovraccarichi
+    drone.back(20);
+  } else if (y < 0 && y > -20) { // se y è negativo, muovi indietro
+    drone.back(20 - y);
+    delay(5000); // aggiungi un piccolo ritardo tra i comandi per evitare sovraccarichi
+    drone.forward(20);
+  } else if (y >= 20) { // se y è maggiore o uguale a 20, muovi in avanti di 20 cm
     drone.forward(y);
-  } else if (y < 0) { // se y è negativo, muovi indietro
+  } else if (y <= -20) { // se y è negativo, muovi indietro
     drone.back(-y);
   }
+  delay(5000); // aggiungi un piccolo ritardo tra i comandi per evitare sovraccarichi
 }
 
 void resetTello() {
