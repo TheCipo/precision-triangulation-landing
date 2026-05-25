@@ -5,21 +5,42 @@
 
 void degradedMode(int distance, int index) {
   Serial.println("Degraded mode!");
-  int deg = 120 * index; // calcola l'angolo in base all'indice del sensore
-  //calcola il vettore di movimento in base alla distanza e all'angolo
-  Serial.print("Distance: ");
+  
+  if (index < 0 || index > 2) {
+    Serial.println("Invalid sensor index");
+    return;
+  }
+  
+  // Array per gestire i dati dei sensori
+  float sensorCoords[3][2] = {{Ax, Ay}, {Bx, By}, {Cx, Cy}};
+  const char* sensorNames[3] = {"Sensor A", "Sensor B", "Sensor C"};
+  
+  Serial.println(sensorNames[index]);
+  
+  float sx = sensorCoords[index][0];
+  float sy = sensorCoords[index][1];
+  float sensorDist = sqrt(sx * sx + sy * sy);
+  if (sensorDist <= 0.0f) {
+    Serial.println("Invalid sensor coordinates");
+    return;
+  }
+  
+  // Calcola la direzione dalla posizione del sensore verso l'origine
+  float dirX = -sx / sensorDist;
+  float dirY = -sy / sensorDist;
+  
+  // Posizione stimata del drone sulla semiretta sensore->origine
+  float x = sx + distance * dirX;
+  float y = sy + distance * dirY;
+  
+  Serial.print("Sensor distance: ");
   Serial.println(distance);
-  Serial.print("Angle: ");
-  Serial.println(deg);
-  float cosDeg = cos(deg * PI / 180);
-  float sinDeg = sin(deg * PI / 180);
-  int x = distance * cosDeg;
-  int y = distance * sinDeg;
-  Serial.print("Vector: (");
+  Serial.print("Estimated position: (");
   Serial.print(x);
   Serial.print(", ");
   Serial.print(y);
   Serial.println(")");
+  
   vectorToTello(-x, -y);
 }
 

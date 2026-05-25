@@ -10,8 +10,8 @@
 #define MAXERRORS 10 //numero massimo di errori consecutivi prima di entrare in modalità degradata
 
 // Pin definitions
-const int trigPins[3] = {23, 19, 17}; //definizione dei pin dei trigger dei sensori
-const int echoPins[3] = {22, 18, 16}; //definizione dei pin degli echo dei sensori
+const int trigPins[3] = {23, 19, 17}; //definizione dei pin dei trigger dei sensori (bianchi)
+const int echoPins[3] = {22, 18, 16}; //definizione dei pin degli echo dei sensori (verdi)
 
 //definizione per il drone
 inline const char * networkName = TELLO_NAME; //nome del drone da connettere, definito in secrets.h
