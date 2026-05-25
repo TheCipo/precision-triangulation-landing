@@ -5,10 +5,8 @@ Sistema di localizzazione e guida di precisione per droni **DJI Tello** basato s
 ---
 
 ## 📌 Stato del Progetto
-Il progetto si configura attualmente come un **Proof of Concept (PoC)** focalizzato sulla localizzazione spaziale. 
-
-* **Completato:** Rilevamento distanze dai sensori HC-SR04, filtraggio dati mediante mediana su 21 campioni per ridurre il rumore, calcolo delle coordinate $(x, y)$ tramite trilaterazione, sistema di configurazione runtime per la calibrazione dei sensori e storage persistente delle impostazioni su flash ESP32. I risultati vengono visualizzati su monitor seriale.
-* **In Sviluppo:** Implementazione effettiva del sistema di controllo remoto via WiFi per il drone DJI Tello, inclusi i comandi di volo e il controllo di centraggio per l'atterraggio di precisione.
+Rilevamento distanze dai sensori HC-SR04, filtraggio dati mediante mediana su 21 campioni per ridurre il rumore, calcolo delle coordinate $(x, y)$ tramite trilaterazione, sistema di configurazione runtime per la calibrazione dei sensori e storage persistente delle impostazioni su flash ESP32. I risultati vengono visualizzati su monitor seriale.
+Implementazione effettiva del sistema di controllo remoto via WiFi per il drone DJI Tello, inclusi i comandi di volo e il controllo di centraggio per l'atterraggio di precisione.
 
 ---
 
@@ -74,9 +72,3 @@ Il codice segue un flusso logico strutturato per garantire misurazioni accurate 
 * `src/`: Contiene il codice sorgente.
 * `docs/`: Documentazione di progetto e presentazioni scolastiche.
 * `libs/`: Eventuali librerie per la gestione del sensore o del drone.
-
----
-
-## ⚠️ Limitazioni Attuali
-* **Visibilità:** Se il drone non è nel raggio d'azione di tutti e tre i sensori contemporaneamente, il sistema non è in grado di stimare la posizione (richiede 3 distanze valide).
-* **Comunicazione:** Il controllo remoto del drone via WiFi non è ancora implementato; attualmente sono presenti solo placeholder per le funzioni di comunicazione e centraggio. La calibrazione avviene esclusivamente via interfaccia seriale.
