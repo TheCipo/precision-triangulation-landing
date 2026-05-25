@@ -1,5 +1,8 @@
 #include "comunication.h"
 #include <Wire.h>
+#include <WiFi.h>
+#include "config.h"
+#include "drone.h"
 
 String readLine(){
   String datoricevuto = ""; //crea la stringa vuota
@@ -12,4 +15,25 @@ String readLine(){
     datoricevuto += c; //aggiungi il carattere alla stringa
   }
   return datoricevuto; //ritorna la stringa letta
+}
+
+void connectToWiFi(const char * ssid, const char * pwd) 
+{
+  Serial.println("Connecting to WiFi network: " + String(ssid));
+  WiFi.disconnect(true);
+  //register event handler
+
+  //Initiate connection
+  WiFi.begin(ssid, pwd);
+
+  Serial.println("Waiting for WIFI connection...");
+  while (WiFi.status() != WL_CONNECTED) {
+   delay(1000);
+   Serial.print(".");
+ }
+  Serial.println("\nConnected to WiFi!");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+  drone.init();
+  connected = true;
 }
