@@ -25,6 +25,7 @@ int padVector[2]; //vettore per tracciare dove si trova il pad (0: x, 1: y)
 bool connected = false; //variabile per segnalare se il drone è connesso al WiFi
 bool landed = false; //variabile per segnalare se il drone è atterrato
 int acceptedDistanceError = 5; //soglia per accettare le misurazioni delle distanze come valide (in cm)
+float cosTheta = 0.86602540378; //coseno dell'angolo dei sensori rispetto al terreno (in gradi)
 
 void setup(){
   storage.begin("landing", false); //inizializzazione del Preferences storage
