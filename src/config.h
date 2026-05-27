@@ -31,5 +31,6 @@ extern int padVector[2]; // Vector to track where the pad is located (0: x, 1: y
 extern bool connected; // Variable to indicate if the drone is connected to WiFi
 extern bool landed; // Variable to indicate if the drone has landed
 extern int finalDistances[3]; // Distances collected
+extern float cosTheta; //cosine of the angle of the sensors respect the ground (in degrees)
 
 #endif

@@ -18,21 +18,38 @@ void coordinateSensori() { //leggere le cordinate dei sensori da seriale
   Serial.print("MAXdistance = ");
   input = readLine();
   MAXdistance = input.toInt();
+  Serial.print(MAXdistance);
+
   Serial.print("MINdistance = ");
   input = readLine();
   MINdistance = input.toInt();
+  Serial.print(MINdistance);
+
   Serial.print("padZero X = ");
   input = readLine();
   padVector[0] = input.toInt();
+  Serial.print(padVector[0]);
+
   Serial.print("padZero Y = ");
   input = readLine();
   padVector[1] = input.toInt();
+  Serial.print(padVector[1]);
+
+
   Serial.print("pad index = ");
   input = readLine();
   padIndex = input.toInt();
+  Serial.print(padIndex);
+
   Serial.print("Accepted distance error = ");
   input = readLine();
   acceptedDistanceError = input.toInt();
+  Serial.print(acceptedDistanceError);
+
+  Serial.print("Theta = ");
+  input = readLine();
+  cosTheta = cos(input.toFloat() * PI / 180.0); //conversione dell'angolo da gradi a radianti e calcolo del coseno
+  Serial.print(cosTheta);
 }
 
 void menuConfigurazione() { 
@@ -48,6 +65,7 @@ void menuConfigurazione() {
   Serial.print("PadZero Y = "); Serial.println(padVector[1]);
   Serial.print("Pad index = "); Serial.println(padIndex);
   Serial.print("Accepted distance error = "); Serial.println(acceptedDistanceError);
+  Serial.print("Theta = "); Serial.println(arcos(cosTheta) * 180.0 / PI); //conversione dell'angolo da radianti a gradi per la visualizzazione
   Serial.println("Inserisci 0 per uscire, 1 per sceglierli provvisoriamente, 2 per modificare la EEPROM/FLASH: ");
   
   // selettore della modalità di configurazione
@@ -69,6 +87,7 @@ void menuConfigurazione() {
       storage.putInt("padZeroY", padVector[1]);
       storage.putInt("padIndex", padIndex);
       storage.putInt("acceptedDistanceError", acceptedDistanceError);
+      storage.putFloat("cosTheta", cosTheta);
       Serial.println("Salvato!");
     }
   }
@@ -88,4 +107,5 @@ void loadSetup() {
   padVector[1] = storage.getInt("padZeroY", 0);
   padIndex = storage.getInt("padIndex", 0);
   acceptedDistanceError = storage.getInt("acceptedDistanceError", 5);
+  cosTheta = storage.getFloat("cosTheta", 0);
 }

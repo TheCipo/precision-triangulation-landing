@@ -3,7 +3,7 @@
 #include "tello.h"
 #include "config.h"
 
-void degradedMode(int distance, int index) {
+void degradedMode(int SensorDistance, int index) {
   Serial.println("Degraded mode!");
   
   if (index < 0 || index > 2) {
@@ -24,6 +24,8 @@ void degradedMode(int distance, int index) {
     Serial.println("Invalid sensor coordinates");
     return;
   }
+
+  float distance = SensorDistance * cosTheta; // Adjust distance for sensor angle
   
   // Calcola la direzione dalla posizione del sensore verso l'origine
   float dirX = -sx / sensorDist;
