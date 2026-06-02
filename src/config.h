@@ -12,6 +12,7 @@
 // Pin definitions
 const int trigPins[3] = {23, 19, 17}; //definizione dei pin dei trigger dei sensori (bianchi)
 const int echoPins[3] = {22, 18, 16}; //definizione dei pin degli echo dei sensori (verdi)
+const int emergencyStopPin = 4; //definizione del pin per il comando di emergenza (rosso)
 
 //definizione per il drone
 inline const char * networkName = TELLO_NAME; //nome del drone da connettere, definito in secrets.h
