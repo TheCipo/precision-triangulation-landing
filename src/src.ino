@@ -8,6 +8,7 @@
 #include "centering_control.h"
 #include "sensor.h"
 #include "filter.h"
+#include "controls.h"
 #include "secrets.h"
 
 //inizializzazione variabili globali
@@ -25,6 +26,9 @@ int padVector[2]; //vettore per tracciare dove si trova il pad (0: x, 1: y)
 bool connected = false; //variabile per segnalare se il drone è connesso al WiFi
 bool landed = false; //variabile per segnalare se il drone è atterrato
 int acceptedDistanceError = 5; //soglia per accettare le misurazioni delle distanze come valide (in cm)
+String emergencyStopCommand = ""; //comando da inviare al drone per l'emergenza
+bool emergencyStopActivated = false; //variabile per segnalare se l'emergenza è attiva
+
 
 void setup(){
   storage.begin("landing", false); //inizializzazione del Preferences storage
@@ -49,7 +53,10 @@ void setup(){
 
   connectToWiFi(networkName, networkPswd); //connessione al drone tramite WiFi
   resetTello(); //reset del drone per portarlo alla posizione di partenza
+  readLine(); //pulizia della seriale da eventuali messaggi residui del drone
+  attachInterrupt(digitalPinToInterrupt(emergencyStopPin), emergencyStop, CHANGE); //configurazione dell'interrupt per il comando di emergenza
 }
+
 
 void loop(){
   //pulizia dei dati precedenti
@@ -58,6 +65,24 @@ void loop(){
     resetTello();
     errorCount = 0;
     return;
+  }
+
+  emergencyStopCommand = ""; //reset del comando di emergenza
+  emergencyStopCommand = readLine(); //lettura di eventuali comandi di emergenza dalla seriale
+  if(emergencyStopCommand.indexOf("STOP") >= 0 && !emergencyStopActivated) { //se viene ricevuto il comando di emergenza e non è già attivo
+    emergencyStop(); //attivazione dell'emergenza
+    emergencyStopActivated = true;
+  }
+  
+  while(emergencyStopActivated){
+    delay(10);
+    emergencyStopCommand = readLine();
+    if(emergencyStopCommand.indexOf("RESET") >= 0) { //se l'emergenza è attiva e viene ricevuto il comando di reset
+      emergencyStopActivated = false; //disattivazione dell'emergenza
+      resetTello(); //reset del drone
+      errorCount = 0; //reset del contatore di errori
+    return;
+    }
   }
 
   if(!landed){ //se il drone non è atterrato continua a cercare di centrarlo
