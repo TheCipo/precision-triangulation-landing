@@ -73,6 +73,17 @@ void loop(){
     emergencyStop(); //attivazione dell'emergenza
     emergencyStopActivated = true;
   }
+  
+  while(emergencyStopActivated){
+    delay(10);
+    emergencyStopCommand = readLine();
+    if(emergencyStopCommand.indexOf("RESET") >= 0) { //se l'emergenza è attiva e viene ricevuto il comando di reset
+      emergencyStopActivated = false; //disattivazione dell'emergenza
+      resetTello(); //reset del drone
+      errorCount = 0; //reset del contatore di errori
+    return;
+    }
+  }
 
   if(!landed){ //se il drone non è atterrato continua a cercare di centrarlo
     //raccolta dei dati dai sensori
