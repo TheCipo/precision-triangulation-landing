@@ -28,7 +28,7 @@ void connectToWiFi(const char * ssid, const char * pwd)
 
   Serial.println("Waiting for WIFI connection...");
   while (WiFi.status() != WL_CONNECTED) {
-   delay(1000);
+   delay(5000);
    Serial.print(".");
  }
   Serial.println("\nConnected to WiFi!");

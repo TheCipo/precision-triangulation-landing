@@ -23,6 +23,8 @@ private :
 	bool check_range(int x, int min, int max);
 
 public:
+	string lastResponse; // Memorizza l'ultima risposta UDP ricevuta dal drone
+
 	Tello();
 	~Tello();
 	
@@ -73,3 +75,4 @@ public:
 };
 
 #endif /* TELLO_H_ */
+
