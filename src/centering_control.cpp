@@ -4,7 +4,8 @@
 #include "config.h"
 
 void degradedMode(int distance, int index) {
-  Serial.println("Degraded mode!");
+  Serial.println("==================================================");
+  Serial.println("[MODALITA' DEGRADATA - 1 SENSORE]");
   
   if (index < 0 || index > 2) {
     Serial.println("Invalid sensor index");
@@ -15,7 +16,11 @@ void degradedMode(int distance, int index) {
   float sensorCoords[3][2] = {{Ax, Ay}, {Bx, By}, {Cx, Cy}};
   const char* sensorNames[3] = {"Sensor A", "Sensor B", "Sensor C"};
   
-  Serial.println(sensorNames[index]);
+  Serial.print("Sensore attivo: ");
+  Serial.print(sensorNames[index]);
+  Serial.print(" | Distanza letta: ");
+  Serial.print(distance);
+  Serial.println(" cm");
   
   float sx = sensorCoords[index][0];
   float sy = sensorCoords[index][1];
@@ -29,31 +34,41 @@ void degradedMode(int distance, int index) {
   float dirX = -sx / sensorDist;
   float dirY = -sy / sensorDist;
   
-  // Posizione stimata del drone sulla semiretta sensore->origine
-  float x = sx + distance * dirX;
-  float y = sy + distance * dirY;
+  // Aggiorna anche le globali Dx, Dy per riferimento nel log pre-movimento
+  Dx = sx + distance * dirX;
+  Dy = sy + distance * dirY;
   
-  Serial.print("Sensor distance: ");
-  Serial.println(distance);
-  Serial.print("Estimated position: (");
-  Serial.print(x);
-  Serial.print(", ");
-  Serial.print(y);
-  Serial.println(")");
+  Serial.print("[RIFERIMENTO] Coordinate stimate drone: (X = ");
+  Serial.print(Dx);
+  Serial.print(" cm, Y = ");
+  Serial.print(Dy);
+  Serial.println(" cm)");
+  Serial.println("==================================================");
   
-  vectorToTello(-x, -y);
+  vectorToTello((int)round(-Dx), (int)round(-Dy));
 }
 
 void stdMode(int x, int y) {
-  int distance = sqrt(x * x + y * y); // calcola la distanza dal centro del pad
-  Serial.print("Distance from center: ");
-  Serial.println(distance);
-  if (distance < acceptedDistanceError) { // se la distanza è inferiore alla soglia di accettazione, considera il drone centrato
-    Serial.println("Drone Centered!");
+  int distance = (int)round(sqrt(x * x + y * y));
+  Serial.println("==================================================");
+  Serial.print("[CONTROLLO CENTRAGGIO] Coordinate drone: (X = ");
+  Serial.print(Dx);
+  Serial.print(" cm, Y = ");
+  Serial.print(Dy);
+  Serial.println(" cm)");
+  Serial.print("Distanza dal centro (0,0): ");
+  Serial.print(distance);
+  Serial.print(" cm (Soglia accettata: ");
+  Serial.print(acceptedDistanceError);
+  Serial.println(" cm)");
+  Serial.println("==================================================");
+
+  if (distance <= acceptedDistanceError) {
+    Serial.println(">>> DRONE CENTRATO! Eseguo atterraggio... <<<");
     drone.land();
     landed = true;
   } else {
-    Serial.println("Drone Not centered!");
+    Serial.println(">>> Drone NON centrato, preparo manovra di correzione <<<");
     vectorToTello(-x, -y);
     landed = false; 
   }

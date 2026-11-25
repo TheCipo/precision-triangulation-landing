@@ -3,6 +3,7 @@
 
 #include "config.h"
 
-void calculatePosition(int distances[3]); //funzione per calcolare la posizione del drone in base alle distanze misurate dai sensori
+void calculatePosition(int distances[3]);
+void calculatePosition2Sensors(int idx1, float d1, int idx2, float d2);
 
 #endif

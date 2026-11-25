@@ -14,7 +14,9 @@ void coordinateSensori() { //leggere le cordinate dei sensori da seriale
   Bx = R * sqrt(3) / 2.0; By = -R / 2.0;
   Cx = -R * sqrt(3) / 2.0; Cy = -R / 2.0;
 
-  //richiesta della distanza massima e minima misurabile dai sensori
+  Serial.print("Inclinazione sensori (gradi, 0=orizzontale, 45=45° alto) = ");
+  input = readLine();
+  sensorAngle = constrain(input.toFloat(), 0.0f, 89.0f);
   Serial.print("MAXdistance = ");
   input = readLine();
   MAXdistance = input.toInt();
@@ -42,6 +44,7 @@ void menuConfigurazione() {
   Serial.print("Ax = "); Serial.print(Ax); Serial.print(" Ay = "); Serial.println(Ay);
   Serial.print("Bx = "); Serial.print(Bx); Serial.print(" By = "); Serial.println(By);
   Serial.print("Cx = "); Serial.print(Cx); Serial.print(" Cy = "); Serial.println(Cy);
+  Serial.print("Inclinazione Sensori = "); Serial.print(sensorAngle); Serial.println("°");
   Serial.print("Distanza Massima = "); Serial.println(MAXdistance);
   Serial.print("Distanza Minima = "); Serial.println(MINdistance);
   Serial.print("PadZero X = "); Serial.println(padVector[0]);
@@ -63,6 +66,7 @@ void menuConfigurazione() {
       storage.putFloat("By", By);
       storage.putFloat("Cx", Cx);
       storage.putFloat("Cy", Cy);
+      storage.putFloat("sensorAngle", sensorAngle);
       storage.putInt("MAXdistance", MAXdistance);
       storage.putInt("MINdistance", MINdistance);
       storage.putInt("padZeroX", padVector[0]);
@@ -77,13 +81,14 @@ void menuConfigurazione() {
 void loadSetup() {
   //caricamento delle coordinate dei sensori e delle variabili di riferimento dalla EEPROM/FLASH
   Ax = storage.getFloat("Ax", 0);
-  Ay = storage.getFloat("Ay", 0);
-  Bx = storage.getFloat("Bx", 0);
-  By = storage.getFloat("By", 0);
-  Cx = storage.getFloat("Cx", 0);
-  Cy = storage.getFloat("Cy", 0);
-  MAXdistance = storage.getInt("MAXdistance", 80);
-  MINdistance = storage.getInt("MINdistance", 0);
+  Ay = storage.getFloat("Ay", 50);
+  Bx = storage.getFloat("Bx", 50 * sqrt(3) / 2.0);
+  By = storage.getFloat("By", -25);
+  Cx = storage.getFloat("Cx", -50 * sqrt(3) / 2.0);
+  Cy = storage.getFloat("Cy", -25);
+  sensorAngle = storage.getFloat("sensorAngle", 45.0f);
+  MAXdistance = storage.getInt("MAXdistance", 160); // Default alzato a 160 cm
+  MINdistance = storage.getInt("MINdistance", 2);
   padVector[0] = storage.getInt("padZeroX", 0);
   padVector[1] = storage.getInt("padZeroY", 0);
   padIndex = storage.getInt("padIndex", 0);
